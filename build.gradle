@@ -20,6 +20,7 @@ ext {
     jstlVersion = '1.2'
     javaxServletApiVersion = '4.0.1'
     javaxValidationApiVersion = '2.0.1.Final'
+    googleGuavaVersion = "31.1-jre"
 }
 
 dependencies {
@@ -38,7 +39,8 @@ dependencies {
     implementation "jstl:jstl:${jstlVersion}"
     implementation "javax.validation:validation-api:${javaxValidationApiVersion}"
     implementation "javax.persistence:javax.persistence-api:${javaxPersistenceVersion}"
-    implementation 'com.google.guava:guava:31.1-jre'
+    implementation "com.google.guava:guava:${googleGuavaVersion}"
+    implementation 'org.apache.maven.plugins:maven-war-plugin:3.3.2'
 }
 
 test {

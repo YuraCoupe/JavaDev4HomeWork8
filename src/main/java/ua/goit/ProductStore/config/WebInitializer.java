@@ -2,7 +2,7 @@ package ua.goit.ProductStore.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class AppInitializer extends
+public class WebInitializer extends
         AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override

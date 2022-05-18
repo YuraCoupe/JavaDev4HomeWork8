@@ -12,7 +12,7 @@ import ua.goit.ProductStore.service.ManufacturerService;
 import java.util.Set;
 
 @Controller
-@RequestMapping(path = "/manufacturers")
+@RequestMapping("/manufacturers")
 public class ManufacturerController {
     private final ManufacturerService manufacturerService;
 
@@ -21,10 +21,8 @@ public class ManufacturerController {
         this.manufacturerService = manufacturerService;
     }
 
-    @GetMapping(path = "/")
-    public String getBook(@RequestParam("manufacturers") Set<Manufacturer> manufacturers
-                        , @RequestParam("manufacturer") Manufacturer manufacturer
-                        , Model model) {
+    @GetMapping(value = "/**")
+    public String getBook(Model model) {
         Set<Manufacturer> manufacturers1 = manufacturerService.findAll();
         model.addAttribute("manufacturers", manufacturers1);
         return "manufacturers";
