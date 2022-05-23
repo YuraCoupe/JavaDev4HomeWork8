@@ -2,17 +2,21 @@ package ua.goit.ProductStore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ua.goit.ProductStore.model.Manufacturer;
 import ua.goit.ProductStore.service.ManufacturerService;
 
+import javax.validation.Valid;
 import java.util.Set;
+import java.util.UUID;
 
 @Controller
-@RequestMapping("/manufacturers")
+@RequestMapping(path = "/manufacturers")
 public class ManufacturerController {
     private final ManufacturerService manufacturerService;
 
@@ -21,10 +25,47 @@ public class ManufacturerController {
         this.manufacturerService = manufacturerService;
     }
 
-    @GetMapping(value = "/**")
-    public String getBook(Model model) {
-        Set<Manufacturer> manufacturers1 = manufacturerService.findAll();
-        model.addAttribute("manufacturers", manufacturers1);
+    @RequestMapping(method = RequestMethod.GET)
+    public String getManufacturers(Model model) {
+        Set<Manufacturer> manufacturers = manufacturerService.findAll();
+        model.addAttribute("manufacturers", manufacturers);
+        return "manufacturers";
+    }
+
+    @RequestMapping(path = "/new", method = RequestMethod.GET)
+    public ModelAndView showNewForm() {
+        return new ModelAndView("manufacturer", "manufacturer", new Manufacturer());
+    }
+
+    @RequestMapping(path = "/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView showEditForm(@PathVariable UUID id) {
+        return new ModelAndView("manufacturer", "manufacturer", manufacturerService.findById(id));
+    }
+
+    @RequestMapping(path = "/edit", method = RequestMethod.GET)
+    public ModelAndView showEditFormWithParam(@RequestParam UUID id) {
+        return new ModelAndView("manufacturer", "manufacturer", manufacturerService.findById(id));
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String submit(@Valid @ModelAttribute("manufacturer")Manufacturer manufacturer,
+                         BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            return "error";
+        }
+        model.addAttribute("name", manufacturer.getName());
+        model.addAttribute("id", manufacturer.getId());
+        manufacturerService.save(manufacturer);
+        Set<Manufacturer> manufacturers = manufacturerService.findAll();
+        model.addAttribute("manufacturers", manufacturers);
+        return "manufacturers";
+    }
+
+    @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    public String delete(@PathVariable UUID id, ModelMap model){
+        manufacturerService.delete(id);
+        Set<Manufacturer> manufacturers = manufacturerService.findAll();
+        model.addAttribute("manufacturers", manufacturers);
         return "manufacturers";
     }
 

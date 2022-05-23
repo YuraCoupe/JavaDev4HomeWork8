@@ -1,5 +1,7 @@
 package ua.goit.ProductStore.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
@@ -9,10 +11,11 @@ import java.util.UUID;
 public class Manufacturer {
     private UUID id;
     private String name;
-    private Set<Product> productSet;
+    private Set<Product> products;
 
     @Id
-    @Column(name = "id")
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    @Column(name = "id", columnDefinition = "uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID getId() {
         return id;
@@ -32,11 +35,11 @@ public class Manufacturer {
     }
 
     @OneToMany(mappedBy = "manufacturer")
-    public Set<Product> getProductSet() {
-        return productSet;
+    public Set<Product> getProducts() {
+        return products;
     }
 
-    public void setProductSet(Set<Product> productSet) {
-        this.productSet = productSet;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 }

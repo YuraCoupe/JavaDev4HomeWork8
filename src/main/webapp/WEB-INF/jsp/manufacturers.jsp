@@ -10,7 +10,7 @@
     <body>
         <c:import url="${contextPath}/WEB-INF/jsp/navibar.jsp"/>
         <div class="container">
-            <form action="/manufacturers">
+            <form action="/manufacturers/edit">
                 <div class="form-group">
                     <label for="Id">Manufacturer name:</label><br>
                     <select class="form-control" id="id" name="id">
@@ -61,8 +61,8 @@
                         <td>
                             <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group me-2" role="group" aria-label="Second group">
-                                     <a href="/manufacturers/${manufacturer.id}" type="button" class="btn btn-warning">Edit</a>
-                                     <a href="/manufacturers?deleteId=${manufacturer.id}" type="button" class="btn btn-danger">Remove</a>
+                                     <a href="/manufacturers/edit/${manufacturer.id}" type="button" class="btn btn-warning">Edit</a>
+                                     <a href="/manufacturers/delete/${manufacturer.id}" type="button" class="btn btn-danger">Remove</a>
                                 </div>
                             </div>
                         </td>

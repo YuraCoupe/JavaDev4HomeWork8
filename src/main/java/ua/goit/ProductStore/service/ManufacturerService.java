@@ -2,6 +2,7 @@ package ua.goit.ProductStore.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.goit.ProductStore.model.Manufacturer;
 import ua.goit.ProductStore.modell.exceprion.ManufacturerNotFoundException;
 import ua.goit.ProductStore.repository.ManufacturerRepository;
@@ -27,5 +28,13 @@ public class ManufacturerService {
     public Set<Manufacturer> findAll() {
         return StreamSupport.stream(manufacturerRepository.findAll().spliterator(), false)
                             .collect(Collectors.toSet());
+    }
+
+    public void save(Manufacturer manufacturer) {
+        manufacturerRepository.save(manufacturer);
+    }
+
+    public void delete(UUID id) {
+        manufacturerRepository.deleteById(id);
     }
 }
