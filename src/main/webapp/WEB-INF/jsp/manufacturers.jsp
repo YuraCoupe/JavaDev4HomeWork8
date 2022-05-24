@@ -55,7 +55,7 @@
                         </td>
                         <td>
                             <c:forEach items="${manufacturer.products}" var="product">
-                                <c:out value="${product.name}"/>"/><br>
+                                <c:out value="${product.name}"/><br>
                             </c:forEach>
                         </td>
                         <td>

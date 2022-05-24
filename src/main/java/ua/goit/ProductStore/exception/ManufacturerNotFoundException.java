@@ -1,4 +1,4 @@
-package ua.goit.ProductStore.modell.exceprion;
+package ua.goit.ProductStore.exception;
 
 public class ManufacturerNotFoundException extends RuntimeException {
 

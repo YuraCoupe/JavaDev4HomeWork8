@@ -1,5 +1,7 @@
 package ua.goit.ProductStore.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -13,7 +15,8 @@ public class Product {
     private Manufacturer manufacturer;
 
     @Id
-    @Column(name = "id")
+    @Type(type="org.hibernate.type.PostgresUUIDType")
+    @Column(name = "id", columnDefinition = "uuid")
     @GeneratedValue(strategy = GenerationType.AUTO)
     public UUID getId() {
         return id;

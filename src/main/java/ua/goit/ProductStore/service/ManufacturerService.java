@@ -2,9 +2,8 @@ package ua.goit.ProductStore.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ua.goit.ProductStore.model.Manufacturer;
-import ua.goit.ProductStore.modell.exceprion.ManufacturerNotFoundException;
+import ua.goit.ProductStore.exception.ManufacturerNotFoundException;
 import ua.goit.ProductStore.repository.ManufacturerRepository;
 
 import java.util.Set;

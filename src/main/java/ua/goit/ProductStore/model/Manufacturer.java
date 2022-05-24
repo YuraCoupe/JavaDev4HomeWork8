@@ -3,6 +3,7 @@ package ua.goit.ProductStore.model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -41,5 +42,18 @@ public class Manufacturer {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Manufacturer that = (Manufacturer) o;
+        return id.equals(that.id) && name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }
