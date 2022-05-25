@@ -28,13 +28,16 @@
                     <form:input path="id" type="UUID" readonly="true" class="form-control" id="id" placeholder="Product ID" name="id" value="${product.id}"/><br>
                     <form:label path="name">Product name:</form:label><br>
                     <form:input path="name" type="text" class="form-control" id="name" placeholder="Enter Product name" name="name" value="${product.name}"/><br>
+                    <form:errors path="name" cssClass="error"/><br>
                     <form:label path="price">Product price:</form:label><br>
                     <form:input path="price" type="number" class="form-control" id="name" placeholder="Enter Product price" name="name" value="${product.price}"/><br>
+                    <form:errors path="price" cssClass="error"/><br><br>
                     <form:label path="manufacturer">Manufacturer:</form:label><br>
                     <form:select path="manufacturer" class="form-control">
                         <c:if test="${empty product.id}"><form:option value="" label="-- select manufacturer --"/></c:if>
                         <form:options items="${manufacturers}" itemLabel="name" itemValue="id"/>
                     </form:select><br>
+                    <form:errors path="manufacturer" cssClass="error"/><br><br>
                 </div>
                 <div class="row">
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">

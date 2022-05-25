@@ -27,7 +27,8 @@
                     <form:label path="id">Manufacturer ID:</form:label><br>
                     <form:input path="id" type="UUID" readonly="true" class="form-control" id="id" placeholder="Manufacturer ID" name="id" value="${manufacturer.id}"/><br>
                     <form:label path="name">Company name:</form:label><br>
-                    <form:input path="name" type="text" class="form-control" id="name" placeholder="Enter Manufacturer name" name="name" value="${manufacturer.name}"/><br>
+                    <form:input path="name" type="text" class="form-control" id="name" placeholder="Enter Manufacturer name" name="name" value="${manufacturer.name}"/>
+                    <form:errors path="name" cssClass="error"/><br><br>
                 </div>
                 <div class="row">
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">

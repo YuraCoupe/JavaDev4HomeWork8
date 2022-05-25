@@ -1,6 +1,7 @@
 package ua.goit.ProductStore.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ public class Role {
     }
 
     @Column(name = "name")
+    @NotEmpty
     public String getName() {
         return name;
     }

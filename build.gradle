@@ -14,7 +14,7 @@ ext {
     springVersion = '5.3.19'
     springDataVersion = '2.6.4'
     hibernateVersion = '5.4.10.Final'
-    hibernateValidatorVersion = '5.4.3.Final'
+    hibernateValidatorVersion = '6.1.0.Final'
     javaxPersistenceVersion = '2.2'
     postgreSQLVersion = '42.3.4'
     jstlVersion = '1.2'

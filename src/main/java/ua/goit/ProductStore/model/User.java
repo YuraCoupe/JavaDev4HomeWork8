@@ -1,6 +1,9 @@
 package ua.goit.ProductStore.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,6 +29,8 @@ public class User {
     }
 
     @Column(name = "email")
+    @NotEmpty
+    @Email
     public String getEmail() {
         return email;
     }
@@ -35,6 +40,7 @@ public class User {
     }
 
     @Column(name = "password")
+    @NotEmpty
     public String getPassword() {
         return password;
     }
@@ -44,6 +50,7 @@ public class User {
     }
 
     @Column(name = "first_name")
+    @NotEmpty
     public String getFirstName() {
         return firstName;
     }
@@ -53,6 +60,7 @@ public class User {
     }
 
     @Column(name = "last_name")
+    @NotEmpty
     public String getLastName() {
         return lastName;
     }
@@ -67,6 +75,7 @@ public class User {
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "role_id") }
     )
+    @NotNull
     public Set<Role> getRoles() {
         return roles;
     }

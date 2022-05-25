@@ -1,12 +1,14 @@
 package ua.goit.ProductStore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ua.goit.ProductStore.model.Manufacturer;
 import ua.goit.ProductStore.model.Product;
 import ua.goit.ProductStore.model.ManufacturerEditor;
@@ -63,15 +65,21 @@ public class ProductController {
         return "product";    }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("product") Product product,
-                         BindingResult result, ModelMap model) {
+    public ModelAndView submit(@Valid @ModelAttribute("product") Product product,
+                         BindingResult result, ModelAndView model) {
         if (result.hasErrors()) {
-            return "error";
+            Set<Manufacturer> manufacturers = manufacturerService.findAll();
+            model.addObject("manufacturers", manufacturers);
+            model.addObject("product", product);
+            model.setViewName("product");
+            model.setStatus(HttpStatus.BAD_REQUEST);
+            return model;
         }
         productService.save(product);
         Set<Product> products = productService.findAll();
-        model.addAttribute("products", products);
-        return "products";
+        model.addObject("products", products);
+        model.setViewName("products");
+        return model;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)

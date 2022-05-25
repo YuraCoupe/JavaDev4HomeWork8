@@ -3,6 +3,9 @@ package ua.goit.ProductStore.model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.UUID;
 
@@ -27,6 +30,7 @@ public class Product {
     }
 
     @Column(name = "name")
+    @NotEmpty
     public String getName() {
         return name;
     }
@@ -36,6 +40,7 @@ public class Product {
     }
 
     @Column(name = "price")
+    @NotNull
     public BigDecimal getPrice() {
         return price;
     }
@@ -46,6 +51,8 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name="manufacturer_id", nullable=false)
+    @Valid
+    @NotNull
     public Manufacturer getManufacturer() {
         return manufacturer;
     }

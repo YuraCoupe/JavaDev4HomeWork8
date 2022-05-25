@@ -15,8 +15,8 @@ public class ManufacturerEditor extends PropertyEditorSupport {
 
     @Override
     public void setAsText(String text) throws IllegalArgumentException {
-        if (text.equals(null)) {
-            this.setValue(new Manufacturer());
+        if (text.equals("")) {
+            this.setValue(null);
         } else {
             Manufacturer manufacturer = manufacturerService.findById(UUID.fromString(text));
             this.setValue(manufacturer);
