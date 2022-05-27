@@ -28,6 +28,7 @@
                    <a href="/manufacturers/new" type="button" class="btn btn-primary">New</a>
                 </div>
             </div>
+            <br>
             <div>
                 <c:if test="${not empty errorMessage}">
                     <c:forEach items="${errorMessage.errors}" var="error">

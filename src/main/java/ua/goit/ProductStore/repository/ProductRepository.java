@@ -16,4 +16,7 @@ public interface ProductRepository extends CrudRepository<Product, UUID> {
 
     @Query("FROM Product p LEFT JOIN FETCH p.manufacturer WHERE p.id = (:id)")
     Optional<Product> findById(@Param("id") UUID id);
+
+    @Query("FROM Product p LEFT JOIN FETCH p.manufacturer WHERE p.manufacturer.id = (:id)")
+    Iterable<Product> findByManufacturerId(@Param("id") UUID id);
 }

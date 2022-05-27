@@ -8,8 +8,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ua.goit.ProductStore.model.ErrorMessage;
 import ua.goit.ProductStore.model.Manufacturer;
+import ua.goit.ProductStore.model.Product;
 import ua.goit.ProductStore.service.ManufacturerService;
+import ua.goit.ProductStore.service.ProductService;
+import ua.goit.ProductStore.service.ValidatorService;
 
 import javax.validation.Valid;
 import java.util.Objects;
@@ -20,10 +24,14 @@ import java.util.UUID;
 @RequestMapping(path = "/manufacturers")
 public class ManufacturerController {
     private final ManufacturerService manufacturerService;
+    private final ProductService productService;
+    private final ValidatorService validatorService;
 
     @Autowired
-    public ManufacturerController(ManufacturerService manufacturerService) {
+    public ManufacturerController(ManufacturerService manufacturerService, ProductService productService, ValidatorService validatorService) {
         this.manufacturerService = manufacturerService;
+        this.productService = productService;
+        this.validatorService = validatorService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -48,6 +56,13 @@ public class ManufacturerController {
         return new ModelAndView("manufacturer", "manufacturer", manufacturerService.findById(id));
     }
 
+    @RequestMapping(value = "/edit/{id}/delete/{productId}", method = RequestMethod.GET)
+    public ModelAndView deleteProduct(@PathVariable UUID id, @PathVariable UUID productId) {
+        productService.delete(productId);
+        return new ModelAndView("manufacturer", "manufacturer", manufacturerService.findById(id));
+    }
+
+
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView submit(@Valid @ModelAttribute("manufacturer")Manufacturer manufacturer,
                          BindingResult result, ModelAndView model) {
@@ -69,7 +84,12 @@ public class ManufacturerController {
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
     public String delete(@PathVariable UUID id, ModelMap model){
-        manufacturerService.delete(id);
+        ErrorMessage errorMessage = validatorService.validateManufacturerToDelete(id);
+        if (!errorMessage.getErrors().isEmpty()) {
+            model.addAttribute("errorMessage", errorMessage);
+        } else {
+            manufacturerService.delete(id);
+        }
         Set<Manufacturer> manufacturers = manufacturerService.findAll();
         model.addAttribute("manufacturers", manufacturers);
         return "manufacturers";
