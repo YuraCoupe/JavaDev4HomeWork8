@@ -16,6 +16,8 @@ id UUID PRIMARY KEY,
 name varchar(50)
 );
 
+ALTER TABLE roles
+	ALTER COLUMN id SET DEFAULT gen_random_uuid ()
 
 CREATE TABLE users (
 	id UUID PRIMARY KEY,
@@ -25,8 +27,14 @@ CREATE TABLE users (
 	last_name varchar(50)
 );
 
+ALTER TABLE users
+	ALTER COLUMN id SET DEFAULT gen_random_uuid ()
+
 CREATE TABLE users_roles (
 	id UUID PRIMARY KEY,
 	user_id UUID REFERENCES users,
 	role_id UUID REFERENCES roles
 );
+
+ALTER TABLE users_roles
+	ALTER COLUMN id SET DEFAULT gen_random_uuid ()
