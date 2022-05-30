@@ -1,7 +1,6 @@
 package ua.goit.ProductStore.model;
 
 import ua.goit.ProductStore.service.ManufacturerService;
-import ua.goit.ProductStore.service.ProductService;
 
 import java.beans.PropertyEditorSupport;
 import java.util.UUID;

@@ -6,7 +6,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ua.goit.ProductStore.model.Manufacturer;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -20,5 +19,4 @@ public interface ManufacturerRepository extends CrudRepository<Manufacturer, UUI
 
     @Query("FROM Manufacturer m LEFT JOIN FETCH m.products WHERE m.id = (:id)")
     Optional<Manufacturer> findById(@Param("id") UUID id);
-
 }

@@ -1,7 +1,6 @@
 package ua.goit.ProductStore.config;
 
 import com.google.common.base.Preconditions;
-import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

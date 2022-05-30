@@ -1,21 +1,22 @@
 package ua.goit.ProductStore.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.goit.ProductStore.model.ErrorMessage;
 import ua.goit.ProductStore.model.Manufacturer;
-import ua.goit.ProductStore.model.Product;
 import ua.goit.ProductStore.service.ManufacturerService;
 import ua.goit.ProductStore.service.ProductService;
-import ua.goit.ProductStore.service.ValidatorService;
-
-import javax.validation.Valid;
+import ua.goit.ProductStore.validator.ManufacturerValidator;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -25,13 +26,27 @@ import java.util.UUID;
 public class ManufacturerController {
     private final ManufacturerService manufacturerService;
     private final ProductService productService;
-    private final ValidatorService validatorService;
+    private final ManufacturerValidator validatorService;
 
     @Autowired
-    public ManufacturerController(ManufacturerService manufacturerService, ProductService productService, ValidatorService validatorService) {
+    public ManufacturerController(ManufacturerService manufacturerService, ProductService productService, ManufacturerValidator validatorService) {
         this.manufacturerService = manufacturerService;
         this.productService = productService;
         this.validatorService = validatorService;
+    }
+
+    @Autowired
+    @Qualifier("manufacturerValidator")
+    private Validator validator;
+
+    @InitBinder
+    private void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
+    }
+
+    @ModelAttribute("manufacturer")
+    public Manufacturer createManufacturerModel() {
+        return new Manufacturer();
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -64,8 +79,9 @@ public class ManufacturerController {
 
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView submit(@Valid @ModelAttribute("manufacturer")Manufacturer manufacturer,
-                         BindingResult result, ModelAndView model) {
+    public ModelAndView submit(@ModelAttribute("manufacturer") @Validated Manufacturer manufacturer,
+                         BindingResult result) {
+        ModelAndView model = new ModelAndView();
         if (result.hasErrors()) {
             if (Objects.nonNull(manufacturer.getId())) {
                 manufacturer = manufacturerService.findById(manufacturer.getId());
