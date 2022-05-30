@@ -28,7 +28,6 @@ public class Manufacturer {
     }
 
     @Column(name = "name")
-    @NotEmpty
     public String getName() {
         return name;
     }
