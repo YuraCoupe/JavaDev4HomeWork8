@@ -37,7 +37,7 @@ public class ManufacturerValidator implements Validator {
 
         Manufacturer manufacturer = (Manufacturer) obj;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "name.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "name.required", "Enter manufacturer name");
 
         Set<Manufacturer> manufacturers = manufacturerRepository.findByName(manufacturer.getName());
 
