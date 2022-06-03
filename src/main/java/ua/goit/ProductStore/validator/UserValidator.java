@@ -7,9 +7,11 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ua.goit.ProductStore.model.ErrorMessage;
 import ua.goit.ProductStore.model.Manufacturer;
+import ua.goit.ProductStore.model.Role;
 import ua.goit.ProductStore.model.User;
 import ua.goit.ProductStore.repository.ManufacturerRepository;
 import ua.goit.ProductStore.repository.ProductRepository;
+import ua.goit.ProductStore.repository.RoleRepository;
 import ua.goit.ProductStore.repository.UserRepository;
 
 import java.util.*;
@@ -18,10 +20,12 @@ import java.util.*;
 public class UserValidator implements Validator {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserValidator(UserRepository userRepository) {
+    public UserValidator(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -48,6 +52,11 @@ public class UserValidator implements Validator {
         if (user.getRoles().isEmpty()) {
             errors.rejectValue("roles", "role.required", "role must be assigned");
 
+        }
+
+        Role adminRole = roleRepository.getAdminRole();
+        if (!user.getRoles().contains(adminRole) && userRepository.findAllwithAdminRole().size() == 1) {
+            errors.rejectValue("roles", "admin.required", "at least one admin role must exist");
         }
     }
 

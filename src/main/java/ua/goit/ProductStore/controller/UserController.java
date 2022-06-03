@@ -98,9 +98,9 @@ public class UserController {
                          BindingResult result) {
         ModelAndView model = new ModelAndView();
         if (result.hasErrors()) {
-            if (Objects.nonNull(user.getId())) {
-                user = userService.findById(user.getId());
-            }
+//            if (Objects.nonNull(user.getId())) {
+//                user = userService.findById(user.getId());
+//            }
             Set<Role> roles = roleService.findAll();
             model.addObject("roles", roles);
             model.addObject("user", user);
