@@ -42,7 +42,7 @@ public class ProductController {
     public String showNewForm(Model model) {
         Set<Manufacturer> manufacturers = manufacturerService.findAll();
         model.addAttribute("manufacturers", manufacturers);
-        model.addAttribute("manufacturer", new Manufacturer());
+        //model.addAttribute("manufacturer", new Manufacturer());
         model.addAttribute("product", new Product());
         return "product";
     }
@@ -51,7 +51,7 @@ public class ProductController {
     public String showEditForm(@PathVariable UUID id, Model model) {
         Set<Manufacturer> manufacturers = manufacturerService.findAll();
         model.addAttribute("manufacturers", manufacturers);
-        model.addAttribute("manufacturer", new Manufacturer());
+        //model.addAttribute("manufacturer", new Manufacturer());
         model.addAttribute("product", productService.findById(id));
         return "product";
     }
@@ -60,7 +60,7 @@ public class ProductController {
     public String showEditFormWithParam(@RequestParam UUID id, Model model) {
         Set<Manufacturer> manufacturers = manufacturerService.findAll();
         model.addAttribute("manufacturers", manufacturers);
-        model.addAttribute("manufacturer", new Manufacturer());
+        //model.addAttribute("manufacturer", new Manufacturer());
         model.addAttribute("product", productService.findById(id));
         return "product";    }
 

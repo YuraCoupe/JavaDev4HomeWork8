@@ -39,7 +39,7 @@ public class ManufacturerController {
     @Qualifier("manufacturerValidator")
     private Validator validator;
 
-    @InitBinder
+    @InitBinder("manufacturer")
     private void initBinder(WebDataBinder binder) {
         binder.setValidator(validator);
     }
