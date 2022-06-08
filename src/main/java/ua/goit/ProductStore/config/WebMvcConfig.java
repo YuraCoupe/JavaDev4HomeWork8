@@ -23,6 +23,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(final ViewControllerRegistry registry) {
         registry.addViewController("/")
                 .setViewName("index");
+
     }
 
     @Bean

@@ -23,12 +23,6 @@
                      <li><a href="/users/new">New</a></li>
                    </ul>
                   </li>
-                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="/roles">Roles<span class="caret"></span></a>
-                   <ul class="dropdown-menu">
-                     <li><a href="/roles">Find</a></li>
-                     <li><a href="/roles/new">New</a></li>
-                   </ul>
-                  </li>
                 </ul>
               </div>
             </nav>

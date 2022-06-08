@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ua.goit.ProductStore.model.Manufacturer;
 import ua.goit.ProductStore.model.User;
 
 import java.util.Optional;
@@ -21,7 +20,10 @@ public interface UserRepository extends CrudRepository<User, UUID> {
     @Query("FROM User u LEFT JOIN FETCH u.roles WHERE u.id = (:id)")
     Optional<User> findById(@Param("id") UUID id);
 
-    @Query("FROM User u JOIN u.roles r WHERE r.name = 'ROLE_ADMIN'")
-    Set<User> findAllwithAdminRole();
+    @Query("FROM User u LEFT JOIN FETCH u.roles r WHERE r.name = 'ROLE_ADMIN'")
+    Set<User> findUsersWithAdministratorRole();
+
+    @Query("FROM User u LEFT JOIN FETCH u.roles r WHERE r.name = 'ROLE_USER'")
+    Set<User> findUsersWithUserRole();
 
 }

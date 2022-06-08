@@ -60,6 +60,20 @@ public class UserController {
         return "users";
     }
 
+    @RequestMapping(path = "/administrators", method = RequestMethod.GET)
+    public String getUsersWithAdministratorRole(Model model) {
+        Set<User> users = userService.findUsersWithAdministratorRole();
+        model.addAttribute("users", users);
+        return "users";
+    }
+
+    @RequestMapping(path = "/users", method = RequestMethod.GET)
+    public String getUsersWithUserRole(Model model) {
+        Set<User> users = userService.findUsersWithUserRole();
+        model.addAttribute("users", users);
+        return "users";
+    }
+
     @RequestMapping(path = "/new", method = RequestMethod.GET)
     public String showNewForm(Model model) {
         Set<Role> roles = roleService.findAll();
@@ -85,13 +99,6 @@ public class UserController {
         //model.addAttribute("role", new Role());
         model.addAttribute("user", userService.findById(id));
         return "user";    }
-
-//    @RequestMapping(value = "/edit/{id}/delete/{roleId}", method = RequestMethod.GET)
-//    public ModelAndView deleteRole(@PathVariable UUID id, @PathVariable UUID productId) {
-//        roleService.delete(roleId);
-//        return new ModelAndView("user", "user", userService.findById(id));
-//    }
-
 
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView submit(@ModelAttribute("user") @Validated User user,

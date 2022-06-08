@@ -2,17 +2,12 @@ package ua.goit.ProductStore.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.goit.ProductStore.exception.ProductNotFoundException;
 import ua.goit.ProductStore.exception.UserNotFoundException;
-import ua.goit.ProductStore.model.Manufacturer;
-import ua.goit.ProductStore.model.Product;
 import ua.goit.ProductStore.model.User;
 import ua.goit.ProductStore.repository.UserRepository;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class UserService {
@@ -28,6 +23,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Set<User> findUsersWithAdministratorRole() {
+        return userRepository.findUsersWithAdministratorRole();
+    }
+
+    public Set<User> findUsersWithUserRole() {
+        return userRepository.findUsersWithUserRole();
+    }
+
     public User findById (UUID id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(String.format("User with id - %s does not exist", id)));
     }
@@ -39,6 +42,8 @@ public class UserService {
     public void delete(UUID id) {
         userRepository.deleteById(id);
     }
+
+
 
 
 }

@@ -27,6 +27,11 @@
                 <div class="btn-group me-2" role="group" aria-label="Second group">
                    <a href="/users/new" type="button" class="btn btn-primary">New</a>
                 </div>
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                   <a href="/users/" type="button" class="btn btn-success">All</a>
+                   <a href="/users/administrators" type="button" class="btn btn-info">Admins</a>
+                   <a href="/users/users" type="button" class="btn btn-info">Users</a>
+                </div>
             </div>
             <div>
                 <c:if test="${not empty errorMessage}">

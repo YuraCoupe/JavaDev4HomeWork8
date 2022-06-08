@@ -6,11 +6,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import ua.goit.ProductStore.model.ErrorMessage;
-import ua.goit.ProductStore.model.Manufacturer;
 import ua.goit.ProductStore.model.Role;
 import ua.goit.ProductStore.model.User;
-import ua.goit.ProductStore.repository.ManufacturerRepository;
-import ua.goit.ProductStore.repository.ProductRepository;
 import ua.goit.ProductStore.repository.RoleRepository;
 import ua.goit.ProductStore.repository.UserRepository;
 
@@ -55,7 +52,7 @@ public class UserValidator implements Validator {
         }
 
         Role adminRole = roleRepository.getAdminRole();
-        if (!user.getRoles().contains(adminRole) && userRepository.findAllwithAdminRole().size() == 1) {
+        if (!user.getRoles().contains(adminRole) && userRepository.findUsersWithAdministratorRole().size() == 1) {
             errors.rejectValue("roles", "admin.required", "at least one admin role must exist");
         }
     }
@@ -63,7 +60,7 @@ public class UserValidator implements Validator {
     public ErrorMessage validateUserToDelete(UUID id) {
         ErrorMessage errorMessage = new ErrorMessage();
         List<String> errors = new ArrayList<>();
-        Set<User> admins = userRepository.findAllwithAdminRole();
+        Set<User> admins = userRepository.findUsersWithAdministratorRole();
 
         if (admins.size() == 1) {
             errors.add(String.format("User with email %s is the one with Admin role. Impossible to delete last Admin user."
