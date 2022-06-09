@@ -23,6 +23,10 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(String.format("User with email - %s does not exist", email)));
+    }
+
     public Set<User> findUsersWithAdministratorRole() {
         return userRepository.findUsersWithAdministratorRole();
     }
@@ -42,6 +46,7 @@ public class UserService {
     public void delete(UUID id) {
         userRepository.deleteById(id);
     }
+
 
 
 

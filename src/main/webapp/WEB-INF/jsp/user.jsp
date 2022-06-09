@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -15,13 +16,15 @@
         <c:import url="${contextPath}/WEB-INF/jsp/navibar.jsp"/>
         <div class="container">
             <div class="row">
+                <security:authorize access="hasRole('ROLE_ADMIN')">
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                     <div class="btn-group me-2" role="group" aria-label="Second group">
                         <a href="/users" type="button" class="btn btn-success">Back to users</a>
                     </div>
                 </div>
+                </security:authorize>
             </div><br>
-        <form:form action="/users" method="post" modelAttribute="user">
+        <form:form action="/users/save" method="post" modelAttribute="user">
             <div class="form-group">
                 <div class="row">
                     <form:label path="id">User ID:</form:label><br>
@@ -43,12 +46,14 @@
                     <form:input path="lastName" type="text" class="form-control" id="lastName" placeholder="Enter last name" name="lastName" value="${user.lastName}"/>
                     <form:errors path="lastName" cssClass="error"/>
                     <br>
+                    <security:authorize access="hasRole('ROLE_ADMIN')">
                     <form:label path="roles">Roles:</form:label><br>
                     <c:forEach items="${roles}" var="role">
                         <form:checkbox path="roles" id="${roles}" label="${role.name}" value="${role}"/></td>
                     </c:forEach>
                     <br>
                     <form:errors path="roles" cssClass="error"/><br><br>
+                    </security:authorize>
                 </div>
                 <div class="row">
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">

@@ -46,13 +46,15 @@ public class UserValidator implements Validator {
             errors.rejectValue("email", "email.already.exist", "user with this email already exists");
         }
 
-        if (user.getRoles().isEmpty()) {
+        if (Objects.isNull(user.getRoles())) {
             errors.rejectValue("roles", "role.required", "role must be assigned");
 
         }
 
         Role adminRole = roleRepository.getAdminRole();
-        if (!user.getRoles().contains(adminRole) && userRepository.findUsersWithAdministratorRole().size() == 1) {
+        if (Objects.nonNull(user.getRoles())
+                && !user.getRoles().contains(adminRole)
+                && userRepository.findUsersWithAdministratorRole().size() == 1) {
             errors.rejectValue("roles", "admin.required", "at least one admin role must exist");
         }
     }

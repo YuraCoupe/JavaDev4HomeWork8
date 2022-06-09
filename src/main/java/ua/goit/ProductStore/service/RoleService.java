@@ -30,4 +30,8 @@ public class RoleService {
     public Role findById (UUID id) {
         return roleRepository.findById(id).orElseThrow(() -> new RoleNotFoundException(String.format("User with id - %s does not exist", id)));
     }
+
+    public Role getUserRole() {
+        return roleRepository.getUserRole();
+    }
 }

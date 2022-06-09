@@ -38,3 +38,6 @@ CREATE TABLE users_roles (
 
 ALTER TABLE users_roles
 	ALTER COLUMN id SET DEFAULT gen_random_uuid ()
+
+ALTER TABLE users
+    ALTER COLUMN password TYPE varchar(200)

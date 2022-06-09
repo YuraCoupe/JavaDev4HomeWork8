@@ -23,7 +23,7 @@
    </head>
 
    <body class="text-center">
-     <form class="form-signin" action="login" method="POST">
+     <form class="form-signin" action="/proccess-login" method="POST">
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
         <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>

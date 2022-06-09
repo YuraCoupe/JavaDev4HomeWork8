@@ -14,4 +14,7 @@ public interface RoleRepository extends CrudRepository<Role, UUID> {
 
     @Query("FROM Role r WHERE r.name = 'ROLE_ADMIN'")
     Role getAdminRole();
+
+    @Query("FROM Role r WHERE r.name = 'ROLE_USER'")
+    Role getUserRole();
 }

@@ -12,7 +12,8 @@ import java.util.UUID;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, UUID> {
-    Optional<User> findByEmail(String email);
+    @Query("FROM User u LEFT JOIN FETCH u.roles WHERE u.email = (:email)")
+    Optional<User> findByEmail(@Param("email") String email);
 
     @Query("FROM User u LEFT JOIN FETCH u.roles")
     Set<User> findAll();

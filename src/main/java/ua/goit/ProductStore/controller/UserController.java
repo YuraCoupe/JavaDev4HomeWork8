@@ -4,6 +4,11 @@ import org.eclipse.sisu.plexus.config.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,6 +25,7 @@ import ua.goit.ProductStore.service.ProductService;
 import ua.goit.ProductStore.validator.ManufacturerValidator;
 import ua.goit.ProductStore.validator.UserValidator;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -30,12 +36,14 @@ public class UserController {
     private final UserService userService;
     private final RoleService roleService;
     private final UserValidator validatorService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService, RoleService roleService, UserValidator validatorService) {
+    public UserController(UserService userService, RoleService roleService, UserValidator validatorService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
         this.validatorService = validatorService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Autowired
@@ -61,6 +69,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/administrators", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String getUsersWithAdministratorRole(Model model) {
         Set<User> users = userService.findUsersWithAdministratorRole();
         model.addAttribute("users", users);
@@ -68,6 +77,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/users", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String getUsersWithUserRole(Model model) {
         Set<User> users = userService.findUsersWithUserRole();
         model.addAttribute("users", users);
@@ -84,11 +94,14 @@ public class UserController {
     }
 
     @RequestMapping(path = "/edit/{id}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String showEditForm(@PathVariable UUID id, Model model) {
         Set<Role> roles = roleService.findAll();
         model.addAttribute("roles", roles);
         //model.addAttribute("role", new Role());
-        model.addAttribute("user", userService.findById(id));
+        User user = userService.findById(id);
+        user.setPassword("********");
+        model.addAttribute("user", user);
         return "user";
     }
 
@@ -97,14 +110,18 @@ public class UserController {
         Set<Role> roles = roleService.findAll();
         model.addAttribute("roles", roles);
         //model.addAttribute("role", new Role());
-        model.addAttribute("user", userService.findById(id));
+        User user = userService.findById(id);
+        user.setPassword("********");
+        model.addAttribute("user", user);
         return "user";    }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(path = "/save", method = RequestMethod.POST)
     public ModelAndView submit(@ModelAttribute("user") @Validated User user,
                          BindingResult result) {
         ModelAndView model = new ModelAndView();
-        if (result.hasErrors()) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if ((!(authentication instanceof AnonymousAuthenticationToken) && result.hasErrors())
+                || ((authentication instanceof AnonymousAuthenticationToken)) && result.hasErrors() && !result.hasFieldErrors("roles")){
 //            if (Objects.nonNull(user.getId())) {
 //                user = userService.findById(user.getId());
 //            }
@@ -115,14 +132,32 @@ public class UserController {
             model.setStatus(HttpStatus.BAD_REQUEST);
             return model;
         }
+        if (user.getPassword().equals("********")) {
+            User oldUser = userService.findById(user.getId());
+            user.setPassword(oldUser.getPassword());
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        if (Objects.isNull(user.getRoles())) {
+            Set<Role> userRoles = new HashSet<>();
+            userRoles.add(roleService.getUserRole());
+            user.setRoles(userRoles);
+        }
         userService.save(user);
-        Set<User> users = userService.findAll();
-        model.addObject("users", users);
-        model.setViewName("users");
-        return model;
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            Set<User> users = userService.findAll();
+            model.addObject("users", users);
+            model.setViewName("users");
+            return model;
+        } else {
+            model.setViewName("login");
+            return model;
+        }
+
     }
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String delete(@PathVariable UUID id, ModelMap model){
         ErrorMessage errorMessage = validatorService.validateUserToDelete(id);
         if (!errorMessage.getErrors().isEmpty()) {
