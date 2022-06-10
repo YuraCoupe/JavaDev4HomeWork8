@@ -1,57 +1,44 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.2.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'war'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'ua.goit.java-online-2'
+version '1.0'
+
+sourceCompatibility = 11
+targetCompatibility = 11
 
 repositories {
     mavenCentral()
 }
 
-ext {
-    junitJupiterVersion = '5.8.2'
-    springVersion = '5.3.19'
-    springDataVersion = '2.6.4'
-    sringSecurityVersion='5.6.1'
-    hibernateVersion = '5.4.10.Final'
-    hibernateValidatorVersion = '6.1.0.Final'
-    javaxPersistenceVersion = '2.2'
-    postgreSQLVersion = '42.3.4'
-    jstlVersion = '1.2'
-    javaxServletApiVersion = '4.0.1'
-    javaxValidationApiVersion = '2.0.1.Final'
-    googleGuavaVersion = "31.1-jre"
-    mavenWarPluginVersion = "3.3.2"
-    log4jVersion = "2.17.2"
-
-}
-
-dependencies {
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}"
-    implementation "org.springframework:spring-context:${springVersion}"
-    implementation "org.springframework:spring-context-support:${springVersion}"
-    implementation "org.springframework:spring-aspects:${springVersion}"
-    implementation "org.springframework:spring-web:${springVersion}"
-    implementation "org.springframework:spring-webmvc:${springVersion}"
-    implementation "org.springframework.data:spring-data-jpa:${springDataVersion}"
-    implementation "org.springframework.security:spring-security-web:${sringSecurityVersion}"
-    implementation "org.springframework.security:spring-security-config:${sringSecurityVersion}"
-    implementation "org.springframework.security:spring-security-taglibs:${sringSecurityVersion}"
-    implementation "org.hibernate:hibernate-core:${hibernateVersion}"
-    implementation "org.hibernate:hibernate-validator:${hibernateValidatorVersion}"
-    implementation "org.postgresql:postgresql:${postgreSQLVersion}"
-    implementation "javax.servlet:javax.servlet-api:${javaxServletApiVersion}"
-    implementation "jstl:jstl:${jstlVersion}"
-    implementation "javax.validation:validation-api:${javaxValidationApiVersion}"
-    implementation "javax.persistence:javax.persistence-api:${javaxPersistenceVersion}"
-    implementation "com.google.guava:guava:${googleGuavaVersion}"
-    implementation "org.apache.maven.plugins:maven-war-plugin:${mavenWarPluginVersion}"
-    implementation "org.apache.logging.log4j:log4j-core:${log4jVersion}"
-    implementation "org.apache.logging.log4j:log4j-api:${log4jVersion}"
-}
-
 test {
     useJUnitPlatform()
+}
+
+ext {
+    postgreSQLVersion = '42.3.4'
+    jstlVersion = '1.2'
+    mockitoVersion = '4.0.0'
+    springSecurityVersion = '5.2.12.RELEASE'
+}
+
+
+dependencies {
+    implementation "org.postgresql:postgresql:${postgreSQLVersion}"
+    implementation "jstl:jstl:${jstlVersion}"
+    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+    implementation group: 'org.springframework.security', name: 'spring-security-taglibs', version: "${springSecurityVersion}"
+
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.34'
+    testImplementation group: "org.junit.jupiter", name: "junit-jupiter-engine", version: "5.2.0"
+    testImplementation group: 'org.springframework.security', name: 'spring-security-test'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testImplementation group: 'com.h2database', name: 'h2', version: '2.1.212'
 }

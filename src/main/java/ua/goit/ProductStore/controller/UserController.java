@@ -1,6 +1,5 @@
 package ua.goit.ProductStore.controller;
 
-import org.eclipse.sisu.plexus.config.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -21,8 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import ua.goit.ProductStore.model.*;
 import ua.goit.ProductStore.service.RoleService;
 import ua.goit.ProductStore.service.UserService;
-import ua.goit.ProductStore.service.ProductService;
-import ua.goit.ProductStore.validator.ManufacturerValidator;
 import ua.goit.ProductStore.validator.UserValidator;
 
 import java.util.HashSet;

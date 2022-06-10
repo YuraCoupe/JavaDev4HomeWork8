@@ -16,12 +16,12 @@ import ua.goit.ProductStore.service.UsersDetailsService;
 @Configuration
 @EnableWebSecurity
 @Profile("!https")
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UsersDetailsService usersDetailsService;
 
     @Autowired
-    public WebSecurityConfig(UsersDetailsService userDetailsService) {
+    public WebSecurityConfiguration(UsersDetailsService userDetailsService) {
         this.usersDetailsService = userDetailsService;
     }
 
