@@ -35,6 +35,8 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     implementation group: 'org.springframework.security', name: 'spring-security-taglibs', version: "${springSecurityVersion}"
+    compileOnly 'com.github.jsimone:webapp-runner:9.0.27.1'
+
 
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.34'
     testImplementation group: "org.junit.jupiter", name: "junit-jupiter-engine", version: "5.2.0"
@@ -42,3 +44,17 @@ dependencies {
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     testImplementation group: 'com.h2database', name: 'h2', version: '2.1.212'
 }
+
+task stage() {
+    dependsOn clean, war
+}
+war.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/server"
+    from(configurations.compileOnly) {
+        include "webapp-runner*"
+    }
+}
+
+stage.dependsOn(copyToLib)
