@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'war'
 }
 
 group 'ua.goit.java-online-2'
@@ -57,3 +58,7 @@ task copyToLib(type: Copy) {
 }
 
 stage.dependsOn(copyToLib)
+
+war {
+    enabled=true
+}
