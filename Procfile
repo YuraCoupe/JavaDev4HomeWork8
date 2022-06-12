@@ -1,2 +1,1 @@
-web: java -jar build/server/webapp-runner-*.jar build/libs/*.war
--Dserver.port=$PORT
+web: java -Dserver.port=$PORT -jar build/server/webapp-runner-*.jar build/libs/*.war
