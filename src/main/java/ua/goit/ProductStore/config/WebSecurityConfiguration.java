@@ -25,10 +25,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http
-                .requiresChannel()
-                .anyRequest()
-                .requiresSecure();
+
         http
                 .authorizeRequests()
                 .antMatchers("/login", "/users/save", "/users/new").permitAll()
