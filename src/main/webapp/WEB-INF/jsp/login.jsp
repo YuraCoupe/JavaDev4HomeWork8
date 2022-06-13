@@ -28,7 +28,7 @@
         <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>
             <label for="email" class="sr-only">Email address</label>
-            <input type="text" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
             <label for="password" class="sr-only">Password</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
             <span>${error}</span>
