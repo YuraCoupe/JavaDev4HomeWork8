@@ -36,7 +36,6 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
     implementation group: 'org.springframework.security', name: 'spring-security-taglibs', version: "${springSecurityVersion}"
     implementation 'org.apache.commons:commons-dbcp2:2.9.0'
-    implementation 'io.github.createam-labs:spring-boot-starter-heroku:1.1'
 
     compileOnly 'com.github.jsimone:webapp-runner:9.0.27.1'
 
