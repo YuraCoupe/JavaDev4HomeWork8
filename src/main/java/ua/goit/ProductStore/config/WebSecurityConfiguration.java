@@ -49,6 +49,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable();
+
+        http
+                .requiresChannel()
+                .anyRequest()
+                .requiresSecure();
+
     }
 
     @Bean
