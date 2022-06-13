@@ -31,7 +31,7 @@
                     <form:input path="id" type="UUID" readonly="true" class="form-control" id="id" placeholder="User ID" name="id" value="${user.id}"/>
                     <br>
                     <form:label path="email">username (email address):</form:label><br>
-                    <form:input path="email" type="text" class="form-control" id="email" placeholder="Enter user email" name="email" value="${user.email}"/>
+                    <form:input path="email" type="email" class="form-control" id="email" placeholder="Enter user email" name="email" value="${user.email}"/>
                     <form:errors path="email" cssClass="error"/>
                     <br>
                     <form:label path="password">Password:</form:label><br>
