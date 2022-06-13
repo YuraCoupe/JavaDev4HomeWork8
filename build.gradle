@@ -37,7 +37,7 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-taglibs', version: "${springSecurityVersion}"
     implementation 'org.apache.commons:commons-dbcp2:2.9.0'
 
-    compileOnly 'com.github.jsimone:webapp-runner:9.0.27.1'
+    compileOnly 'com.github.jsimone:webapp-runner:8.5.11.3'
 
 
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '9.0.34'
