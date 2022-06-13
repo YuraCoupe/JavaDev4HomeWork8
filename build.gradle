@@ -61,6 +61,3 @@ task copyToLib(type: Copy) {
 
 stage.dependsOn(copyToLib)
 
-war {
-    enabled=true
-}
