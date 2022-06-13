@@ -32,8 +32,8 @@ ALTER TABLE users
 
 CREATE TABLE users_roles (
 	id UUID PRIMARY KEY,
-	user_id UUID REFERENCES users,
-	role_id UUID REFERENCES roles
+	user_id UUID REFERENCES users(id),
+	role_id UUID REFERENCES roles(id)
 );
 
 ALTER TABLE users_roles

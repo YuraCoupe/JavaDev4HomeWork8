@@ -52,7 +52,8 @@ public class UserValidator implements Validator {
         }
 
         Role adminRole = roleRepository.getAdminRole();
-        if (Objects.nonNull(user.getRoles())
+        if (Objects.nonNull(user.getId())
+                && Objects.nonNull(user.getRoles())
                 && !user.getRoles().contains(adminRole)
                 && userRepository.findUsersWithAdministratorRole().size() == 1) {
             errors.rejectValue("roles", "admin.required", "at least one admin role must exist");
