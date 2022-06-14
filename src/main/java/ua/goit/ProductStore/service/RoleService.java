@@ -3,9 +3,7 @@ package ua.goit.ProductStore.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.goit.ProductStore.exception.RoleNotFoundException;
-import ua.goit.ProductStore.exception.UserNotFoundException;
 import ua.goit.ProductStore.model.Role;
-import ua.goit.ProductStore.model.User;
 import ua.goit.ProductStore.repository.RoleRepository;
 
 import java.util.Set;

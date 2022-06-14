@@ -2,7 +2,6 @@ package ua.goit.ProductStore.model;
 
 import ua.goit.ProductStore.service.RoleService;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.beans.PropertyEditorSupport;
 import java.util.UUID;
 
